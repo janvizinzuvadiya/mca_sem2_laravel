@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html lang="en" data-bs-theme="dark">
+<html lang="en" data-bs-theme="dark">   
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -18,19 +18,21 @@
         <table class="table table-striped table-dark mt-5">
             <thead>
                 <tr><h1> List Of Students </h1></tr>
-                <tr>
-                    <th scope="col">Sr no.</th>
+                <tr>                       
+                    
+                    <th scope="col">Sr no.</th>gg
                     <th scope="col">Id</th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Name</th>       
                     <th scope="col">Enrollment</th>
                     <th scope="col">Email</th>
                     <th scope="col">Mobile</th>
-                    <th scope="col">Action</th>
+                    <th scope="col">Action</th>.
                 </tr>
             </thead>
             <tbody>
-                
-                {{ $i=1 }}
+                @php
+                    $i = 1; 
+                @endphp
                 @foreach ($students as $stud )
                <tr>
                 <th scope="row">{{ $i }}</th>
@@ -40,12 +42,17 @@
                     <td>{{ $stud->email }}</td>
                     <td>{{ $stud->mobile }}</td>
                     <td>
-                        <button class="btn btn-primary">Edit</button>
-                        <button class="btn btn-danger">Delete</button>
+                        <a href="{{ route('edit', $stud->id) }}"><button class="btn btn-primary">Edit</button></a>
+                        <a href="{{ route('delete', $stud->id) }}"><button class="btn btn-danger">Delete</button></a>
                     </td>
-                    {{ $i++ }}
+                    @php
+                        $i++;
+                    @endphp
                 </tr>
                 @endforeach
+                @while ($i != -1)
+                    
+                @endwhile
                 
             </tbody>
         </table>

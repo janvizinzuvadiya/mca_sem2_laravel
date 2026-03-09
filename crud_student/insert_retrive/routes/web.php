@@ -12,3 +12,9 @@ Route::get('/all',[StudentController::class,'allStudents'])->name('all');
 Route::get('/add',[StudentController::class,'addStudents'])->name('add');
 
 Route::post('/student/insert',[StudentController::class,'addmsg'])->name('addmsg');
+
+Route::get('/edit/{id}',[StudentController::class,'updateStudents'])->name('edit');
+
+Route::post('/student/update/{id}',[StudentController::class,'updatemsg'])->name('updatemsg');
+
+Route::get('/delete/{id}',[StudentController::class,'deleteStudents'])->name('delete'); 
