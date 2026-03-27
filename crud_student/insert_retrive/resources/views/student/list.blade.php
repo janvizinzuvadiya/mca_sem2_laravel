@@ -20,7 +20,7 @@
                 <tr><h1> List Of Students </h1></tr>
                 <tr>                       
                     
-                    <th scope="col">Sr no.</th>gg
+                    <th scope="col">Sr no.</th>
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>       
                     <th scope="col">Enrollment</th>
@@ -50,9 +50,7 @@
                     @endphp
                 </tr>
                 @endforeach
-                @while ($i != -1)
-                    
-                @endwhile
+                
                 
             </tbody>
         </table>

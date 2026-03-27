@@ -20,10 +20,16 @@
                 <div class="col-md-6">
                     <label for="inputid4" class="form-label">Id</label>
                     <input type="text" name="id" class="form-control" id="inputid4">
+                    @error('id')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="col-md-6">
                     <label for="inputname4" class="form-label">Name</label>
                     <input type="text" name="name" class="form-control" id="inputname4">
+                    @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
 
@@ -31,18 +37,27 @@
                 <div class="col-md-6">
                     <label for="inputenroll4" class="form-label">Enrollment</label>
                     <input type="text" name="enrollment" class="form-control" id="inputenroll4">
+                    @error('enrollment')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <div class="row g-3">
                 <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">Email</label>
-                    <input type="email" name="email" class="form-control" id="inputEmail4">
+                    <input type="text" name="email" class="form-control" id="inputEmail4">
+                    @error('email')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <div class="row g-3">
                 <div class="col-12">
                     <label for="inputmobile" class="form-label">Mobile</label>
                     <input type="text" name="mobile" class="form-control" id="inputmobile">
+                    @error('mobile')
+                        <span class="text-danger">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             <div class="row g-3 mt-4">
