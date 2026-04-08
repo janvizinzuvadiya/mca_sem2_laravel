@@ -366,14 +366,15 @@
         <div class="main-panel">
           <div class="content-wrapper">
 
+
+          <!-- User Pages -->
             @yield('user_details')
             @yield('add_user')
             
 
-
-
-
-
+          <!-- Marks Pages -->
+            @yield('mark_details')
+            @yield('add_mark')
 
             
 

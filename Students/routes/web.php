@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\MarksController;
+
 
 Route::get('/', [StudentController::class, 'index']);
 
@@ -17,5 +19,6 @@ Route::prefix('Mark')->controller(MarksController::class)->group(function()
 {
     Route::get('/index','index')->name('Dashboard');
     Route::get('/add_mark','create')->name('add_mark');
+    Route::get('/mark_details','index')->name('allmarks');
     Route::post('/store','store')->name('store');
 });

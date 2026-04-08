@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use DB;
 
 class MarksController extends Controller
 {
@@ -11,7 +12,11 @@ class MarksController extends Controller
      */
     public function index()
     {
-        //
+
+        $classes = DB::table('classes')->get();
+        $exams = DB::table('exams')->get();
+
+        return view('Student.marks.mark_details',compact('classes','exams'));
     }
 
     /**
@@ -33,7 +38,7 @@ class MarksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
         //
     }
