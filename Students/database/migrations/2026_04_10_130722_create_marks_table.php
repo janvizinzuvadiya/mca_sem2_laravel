@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-            Schema::create('marks', function (Blueprint $table) {
+         Schema::create('marks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->table('users')->constrained();
-            $table->foreignId('class_id')->table('classes')->constrained();
-            $table->foreignId('exam_id')->table('exams')->constrained();
             $table->foreignId('subject_id')->table('subjects')->constrained();
-            $table->integer('marks');
+
+            $table->integer('cia1');
+            $table->integer('cia2');
+            $table->integer('see');
+            
             $table->timestamps();
         });
     }

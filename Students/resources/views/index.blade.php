@@ -416,33 +416,34 @@
             <div class="card">
                 <div class="card-body">
                 <h4 class="card-title">All Students</h4>
+                
                 <p class="card-description"> All Information <code>.table</code>
                 </p>
                 <div class="table-responsive">
                     <table class="table">
                     <thead>
                         <tr>
-                        <th>Sr no.</th>
-                        <th>Name</th>   
-                        <th>Class</th>
-                        <th>Subject</th>
-                        <th>Exam</th>
-                        <th>Marks</th>
+                          <th>Sr no.</th>
+                          <th>Name</th>   
+                          <th>Class</th>
+                          <th>Subject</th>
+                          <th>CIA1</th>
+                          <th>CIA2</th>
+                          <th>SEE</th>
+                          <th>Total Marks</th>
                         </tr>
                     </thead>
                     <tbody>
                         @php
                             $i = 1;
                         @endphp
-                    <tr>
+                    <tr>  
                         @foreach ($result as $rec)
                        
                         <td>{{ $i }}</td>
                         <td>{{ $rec->name }}</td>
                         <td>{{ $rec->class_name }}-{{ $rec->division }}</td>
                         <td>{{ $rec->subject_name }}</td>
-                        <td>{{ $rec->exam_name }}</td>
-                        <td>{{ $rec->marks }}</td>
                         <td>
                             <label class="badge badge-success">Edit</label>
                             <label class="badge badge-danger">Delete</label>    
@@ -456,7 +457,7 @@
                     </tbody>
                     </table>
                 </div>
-                </div>
+                </div>  
             </div>
         </div>
     </div>

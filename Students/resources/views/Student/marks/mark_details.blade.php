@@ -1,77 +1,134 @@
 @extends('template')
 @section('mark_details')
     
-              <div class="col-md-6 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">Marks Details</h4>
-                    <p class="card-description"> Select Class, Subject, Exam to see marks </p>
-                    <div class="row align-items-end">
-                      <div class="col-6 ">
-                        <div class="template-demo d-flex justify-content-between">
-                          
-                          <div class="dropdown">
-                            <button class="btn btn-danger dropdown-toggle" type="button" id="dropdownMenuIconButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="mdi mdi-book"></i>Class
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton2">
-                              <h6 class="dropdown-header">Select Class</h6>
+  <div class="col-md-6 grid-margin stretch-card">
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title">Marks Details</h4>
+        <p class="card-description"> Select Class, Subject to see marks </p>
+        <div class="row align-items-end">
+          <div class="col-12">
+            <div class="template-demo d-flex justify-content-between">
+              <form action="{{ route('allmarks') }}" class="container" method="GET">
+                <div class="row">
+                    <div class="col-md-4">
+                      <div class="dropdown">
+                        <select class="btn btn-warning text-white" name="class_subject_id">
+                            <option value="">Choose Class & Subject</option>
+                            
                               @foreach($classes as $class)
-                                <a class="dropdown-item" name="{{ $class->id }}" href="#">{{ $class->class_name }}-{{ $class->division }}</a>
-                              @endforeach
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                          </div>
+                                  @php    
+                                      $subjects = DB::table('subjects')
+                                          ->join('class_subject', 'class_subject.subject_id', '=', 'subjects.id')
+                                          ->where('class_subject.class_id', $class->id)
+                                          ->select('subjects.subject_name', 'subjects.id')
+                                          ->get();   
+                                  @endphp
 
-                          <div class="dropdown">
-                            <button class="btn btn-warning dropdown-toggle" type="button" id="dropdownMenuIconButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              
-                              <i class="mdi mdi-calendar"></i>Exam
-                            <!-- <i class="mdi mdi-earth"></i> -->
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton1">
-                              <h6 class="dropdown-header">Select Exam</h6>
-                              @foreach($exams as $exam)
-                                <a class="dropdown-item" name="{{ $exam->id }}" href="#">{{ $exam->exam_name }}</a>
+                                  <optgroup label="{{ $class->class_name }} - {{ $class->division }}">
+                                      
+                                      @foreach($subjects as $subject)
+                                          <option value="{{ $class->id }},{{ $subject->id }}">
+                                              {{ $subject->subject_name }}
+                                          </option>
+                                      @endforeach
+                                      
+                                  </optgroup>
                               @endforeach
-                              <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="#">Separated link</a>
-                            </div>
-                          </div>
-                          
-                        </div>
+                        </select>
                       </div>
                     </div>
-                <!-- <hr class="text-white"> -->
-                <hr class="border-light">
-                <div class="container m-4">
-                    <div class="dropdown">
-                        <b class="text-lg display-3">vsdfv </b>
-                        <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuIconButton6" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="mdi mdi-pencil"></i>Subject
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuIconButton6">
-                            <h6 class="dropdown-header">Settings</h6>
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Separated link</a>
+
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-danger btn-block">
+                                <i class="mdi mdi-magnify"></i> Fetch Marks
+                            </button>
                         </div>
+                    </div>                                
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  <!-- <hr class="text-white"> -->
+  <hr class="border-light">
+  <div class="container m-4">
+      
+    @if(isset($marks))
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title"><b>{{ $class->class_name }} - {{ $class->division }}</b><hr/>Total Student: {{ $marks->count() }}</h4>
+                    <div class="table-responsive">
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>Student Name</th>
+                                    <th>Subject</th>
+                                    <th> CIA 1 </th>
+                                    <th> CIA 2 </th>
+                                    <th> SEE </th>
+                                    <th>Marks</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse($marks as $mark)
+                                    <tr>
+                                        <td>{{ $mark->student_name }}</td>
+                                        <td>{{ $mark->subject_name }}</td>
+                                        <td>
+                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
+                                                {{ $mark->marks }}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
+                                                {{ $mark->marks }}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
+                                                {{ $mark->marks }}
+                                            </label>
+                                        </td>
+                                        <td>
+                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
+                                                {{ $mark->marks }}
+                                            </label>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3" class="text-center">No marks found for this selection.</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
-
-
-
                 </div>
-                    
-                  </div>
-                </div>
-              </div>
+            </div>
+        </div>
+    </div>
+@endif
 
 
 
-            
 
+
+
+
+
+
+
+
+
+    </div>
+        
+  </div>
+</div>
+</div>
 
 @endsection

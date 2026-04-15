@@ -14,21 +14,21 @@ class StudentController extends Controller
     public function index()
     {
         $result = DB::table('users')
-            ->join('marks','marks.user_id','=','users.id')
-            ->join('classes','marks.class_id','=','classes.id')
-            ->join('exams','marks.exam_id','=','exams.id')
-            ->join('subjects','marks.subject_id','=','subjects.id')
+        ->join('marks','marks.user_id','=','users.id')
+        ->join('subjects','marks.subject_id','=','subjects.id')
+        ->join('classes','classes.id','=','users.class_id')
 
-            ->select(
-                'users.name',
-                'classes.class_name',
-                'classes.division',
-                'subjects.subject_name',
-                'exams.exam_name',
-                'marks.marks'
-            )
+        ->select(
+            'users.name',
+            'classes.class_name',
+            'classes.division',
+            'subjects.subject_name',
+            'marks.cia1',
+            'marks.cia2',
+            'marks.see'       
+        )
 
-            ->get();
+        ->get();
 
         return view('index',compact('result'));
     }
@@ -76,21 +76,31 @@ class StudentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        //
-        $user= DB::table('users')
-        ->join('classes','classes.id','=','users.class_id')
-        ->select(
-            'class_name',
-            'division',
-            'name',
-            'email',
-            'mobile'
-        )
-        ->get();
+        $class = DB::table('classes')->get();
 
-        return view('Student.users.user_details', compact('user'));
+        // Build the base query
+        $query = DB::table('users')
+            ->join('classes', 'classes.id', '=', 'users.class_id')
+            ->select(
+                'users.id as user_id',
+                'users.name',
+                'users.email',
+                'users.mobile',
+                'users.class_id', // Add this for the loop logic    
+                'classes.class_name',
+                'classes.division'
+            );
+
+        // If class_id is provided in the request, filter the results
+        if ($request->filled('class_id')) {
+            $query->where('users.class_id', $request->class_id);
+        }
+
+        $result = $query->get();
+
+        return view('Student.users.user_details', compact('result','class'));
     }
 
     /**
@@ -98,7 +108,24 @@ class StudentController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $class = DB::table('classes')->get();
+       
+        $result = DB::table('users')
+        ->join('classes','classes.id','=','users.class_id')
+        ->select(
+            'users.id',
+            'users.name',
+            'users.email',
+            'users.mobile',
+            'users.password',
+            'classes.id as class_id',
+            'classes.class_name',
+            'classes.division'  
+        )
+        ->where('users.id',$id)
+        ->first();
+
+        return view('Student.users.edit_user',compact('result','class'));
     }
 
     /**
@@ -106,7 +133,42 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $request->validate(
+            [
+                'name'=> 'required',
+                'email' => 'required|email',
+                'mobile' => 'required|numeric|digits:10',
+                'password' => 'reqiored',
+                'class_id'=> 'required'
+            ]
+        );
+
+        $data = 
+        [
+            'name' => $request->name,
+            'email' => $request->email,
+            'mobile' => $request->mobile,
+            'class_id'=> $request->class_id
+        ];
+        if($request->filled('password'))
+        {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $flag = DB::table('users')
+        ->where('id', $id)
+        ->update($data);
+
+        if($flag)
+        {
+            return view('allusers');
+        }
+        else
+        {
+            return "Failed to update Value!";
+        }
+        
+
     }
 
     /**

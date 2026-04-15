@@ -10,13 +10,31 @@ class MarksController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        
         $classes = DB::table('classes')->get();
         $exams = DB::table('exams')->get();
+        $marks = null; 
 
-        return view('Student.marks.mark_details',compact('classes','exams'));
+        if ($request->filled('class_subject_id')) 
+        {
+           
+            $ids = explode(',', $request->class_subject_id);
+            $class_id = $ids[0];
+            $subject_id = $ids[1];  
+
+        
+            $marks = DB::table('marks')
+                ->join('users', 'marks.user_id', '=', 'users.id')
+                ->join('subjects', 'marks.subject_id', '=', 'subjects.id')
+                ->where('marks.class_id', $class_id)
+                ->where('marks.subject_id', $subject_id)
+                ->select('users.name as student_name', 'subjects.subject_name', 'marks.cia1', 'marks.cia2', 'marks.see', 'marks.total_marks')
+                ->get();
+        }
+
+        return view('Student.marks.mark_details', compact('classes', 'exams', 'marks'));
     }
 
     /**

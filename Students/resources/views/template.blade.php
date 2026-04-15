@@ -21,6 +21,18 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css'); }}">
     <!-- End layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png'); }}" />
+    <style>
+
+          .dropdown-submenu {
+              position: relative;
+          }
+
+          .dropdown-submenu .dropdown-menu {
+              top: 0;
+              left: 100%; /* Positions the subject menu to the right of the class name */
+              margin-top: -1px;
+          }
+      </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -402,6 +414,7 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+     
     <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js'); }}"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->

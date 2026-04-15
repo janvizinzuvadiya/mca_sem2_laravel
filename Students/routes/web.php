@@ -10,15 +10,23 @@ Route::get('/', [StudentController::class, 'index']);
 Route::prefix('Student')->controller(StudentController::class)->group(function () 
 {
     Route::get('/index','index')->name('Dashboard');
-    Route::get('/user_details','show')->name('allusers');
+    Route::get('/user_details/{id}','show')->name('allusers');
+
     Route::get('/add_user','create')->name('register');
     Route::post('/store','store')->name('store');
+
+    Route::get('/edit/{id}','edit')->name('Edit');
+    Route::post('/update/{id}','update')->name('update');
+
+    Route::get('/delete/{id}','destroy')->name('Delete');
+
+
 });
 
 Route::prefix('Mark')->controller(MarksController::class)->group(function()
 {
     Route::get('/index','index')->name('Dashboard');
     Route::get('/add_mark','create')->name('add_mark');
-    Route::get('/mark_details','index')->name('allmarks');
-    Route::post('/store','store')->name('store');
+    Route::get('/mark_details','show')->name('allmarks');
+    Route::post('/store','store')->name('store');   
 });
