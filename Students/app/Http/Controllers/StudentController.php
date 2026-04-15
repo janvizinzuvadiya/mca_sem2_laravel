@@ -65,7 +65,7 @@ class StudentController extends Controller
 
         if( $flag )
         {
-            return redirect()->route('allusers');
+            return redirect()->route('allusers','all');
         }
         else    
         {
@@ -133,17 +133,18 @@ class StudentController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // return $id; 
         $request->validate(
             [
                 'name'=> 'required',
                 'email' => 'required|email',
                 'mobile' => 'required|numeric|digits:10',
-                'password' => 'reqiored',
+                'password' => 'required',
                 'class_id'=> 'required'
             ]
         );
 
-        $data = 
+        $data =     
         [
             'name' => $request->name,
             'email' => $request->email,
@@ -159,13 +160,11 @@ class StudentController extends Controller
         ->where('id', $id)
         ->update($data);
 
-        if($flag)
-        {
-            return view('allusers');
-        }
-        else
-        {
-            return "Failed to update Value!";
+       // We check if the update was successful OR if no changes were made (both are technically 'success')
+        if ($flag !== false) { 
+            return redirect()->route('allusers', $request->class_id)->with('success', 'Profile Updated Successfully!');
+        } else {
+            return back()->with('error', 'Something went wrong!');
         }
         
 
@@ -176,6 +175,10 @@ class StudentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DB::table('users')
+        ->where('id',$id)
+        ->delete();
+
+        return redirect()->route('allusers',"all");
     }
 }
