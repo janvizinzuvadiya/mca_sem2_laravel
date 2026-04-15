@@ -18,7 +18,7 @@ Route::prefix('Student')->controller(StudentController::class)->group(function (
     Route::get('/edit/{id}','edit')->name('Edit');
     Route::post('/update/{id}','update')->name('update');
 
-    Route::get('/delete/{id}','destroy')->name('Delete');
+    Route::get('/delete/{id}','destroy')->name('Delete'); 
 });
 
 Route::prefix('Mark')->controller(MarksController::class)->group(function()

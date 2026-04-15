@@ -16,24 +16,18 @@
                         <select class="btn btn-warning text-white" name="class_subject_id">
                             <option value="">Choose Class & Subject</option>
                             
-                              @foreach($classes as $class)
-                                  @php    
-                                      $subjects = DB::table('subjects')
-                                          ->join('class_subject', 'class_subject.subject_id', '=', 'subjects.id')
-                                          ->where('class_subject.class_id', $class->id)
-                                          ->select('subjects.subject_name', 'subjects.id')
-                                          ->get();   
-                                  @endphp
+                              @foreach($class as $cs)
 
-                                  <optgroup label="{{ $class->class_name }} - {{ $class->division }}">
+                                  <optgroup label="{{ $cs->class_name }} - {{ $cs->division }}">
                                       
-                                      @foreach($subjects as $subject)
-                                          <option value="{{ $class->id }},{{ $subject->id }}">
-                                              {{ $subject->subject_name }}
+                                      @foreach($class_sub as $sub)
+                                          <option value="{{ $cs->id }},{{ $sub->subject_id }}">
+                                              {{ $sub->subject_name }}
                                           </option>
                                       @endforeach
                                       
                                   </optgroup>
+
                               @endforeach
                         </select>
                       </div>

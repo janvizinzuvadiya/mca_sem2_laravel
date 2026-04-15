@@ -56,9 +56,40 @@ class MarksController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Request $request)
     {
-        //
+        $class = DB::table('classes')->get();
+        $class_sub = DB::table('class_subject')
+        ->join('classes','classes.id','=','class_subject.class_id')
+        ->join('subjects','subjects.id','=','class_subject.subject_id')
+        ->select(
+            'classes.id',
+            'classes.class_name',
+            'classes.division',
+            'subjects.id as subject_id',
+            'subjects.subject_name', 
+            'class_subject.id as class_subject_id'
+        )
+        ->get();    
+
+        $data = DB::table('marks')
+        ->join('users','users.id','=','marks.user_id')
+        ->select(
+            'users.name as student_name',
+            'marks.cia1',
+            'marks.cia2',
+            'marks.see'
+        );
+
+        if($request->filled('class_id'))
+        {
+            $data->where('marks.class_id',$request->class_id);
+        }
+
+        $result= $data->get();
+
+        return view('Student.marks.mark_details',compact('result','class_sub','class'));
+
     }
 
     /**
