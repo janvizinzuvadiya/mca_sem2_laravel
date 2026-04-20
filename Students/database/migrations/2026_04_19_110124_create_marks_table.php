@@ -14,7 +14,7 @@ return new class extends Migration
          Schema::create('marks', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->table('users')->constrained();
-            $table->foreignId('subject_id')->table('subjects')->constrained();
+            $table->foreignId('class_subject_id')->table('class_subject')->constrained();
 
             $table->integer('cia1');
             $table->integer('cia2');

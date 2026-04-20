@@ -24,7 +24,9 @@ Route::prefix('Student')->controller(StudentController::class)->group(function (
 Route::prefix('Mark')->controller(MarksController::class)->group(function()
 {
     Route::get('/index','index')->name('Dashboard');
-    Route::get('/add_mark','create')->name('add_mark');
     Route::get('/mark_details','show')->name('allmarks');
-    Route::post('/store','store')->name('store');   
+
+    Route::get('/add_mark','create')->name('add_mark');
+    Route::post('/store','store')->name('score_entry');
+   
 });

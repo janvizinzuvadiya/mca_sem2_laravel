@@ -15,7 +15,7 @@ class StudentController extends Controller
     {
         $result = DB::table('users')
         ->join('marks','marks.user_id','=','users.id')
-        ->join('subjects','marks.subject_id','=','subjects.id')
+        ->join('subjects','subjects.id','=','class_subject.subject_id')
         ->join('classes','classes.id','=','users.class_id')
 
         ->select(
@@ -88,7 +88,7 @@ class StudentController extends Controller
                 'users.name',
                 'users.email',
                 'users.mobile',
-                'users.class_id', // Add this for the loop logic    
+                'users.class_id', 
                 'classes.class_name',
                 'classes.division'
             );
@@ -103,9 +103,10 @@ class StudentController extends Controller
         return view('Student.users.user_details', compact('result','class'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+    
+    /*
+      Show the form for editing the specified resource.
+    */
     public function edit(string $id)
     {
         $class = DB::table('classes')->get();
@@ -115,7 +116,7 @@ class StudentController extends Controller
         ->select(
             'users.id',
             'users.name',
-            'users.email',
+            'users.email',  
             'users.mobile',
             'users.password',
             'classes.id as class_id',

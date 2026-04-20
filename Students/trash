@@ -1,0 +1,27 @@
+$data = DB::table('marks')
+    ->join('users','users.id','=','marks.user_id')
+    ->join('subjects','subjects.id','=','class_subject.subject_id')
+    ->join('classes','classes.id','=','class_subject.class_id')
+    ->select(
+        'users.name as student_name',
+        'classes.class_name',
+        'classes.division',
+        'subjects.subject_name',
+        'marks.cia1',
+        'marks.cia2',
+        'marks.see'
+    );
+
+    // if($request->filled('class_subject_id'))
+    // {
+    //     $data->where('marks.user_id',$request->class_id);
+    // }
+    
+    
+    $result= $data->get();
+
+    
+    
+    
+    
+    

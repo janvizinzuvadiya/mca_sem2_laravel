@@ -1,7 +1,7 @@
 @extends('template')
 @section('mark_details')
     
-  <div class="col-md-6 grid-margin stretch-card">
+  <div class="col-md-9 grid-margin stretch-card">
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Marks Details</h4>
@@ -19,13 +19,15 @@
                               @foreach($class as $cs)
 
                                   <optgroup label="{{ $cs->class_name }} - {{ $cs->division }}">
-                                      
-                                      @foreach($class_sub as $sub)
+                                    @php
+                                        $filtersub = $class_sub->where('class_id', $cs->id);
+                                    @endphp
+
+                                      @foreach($filtersub as $sub)
                                           <option value="{{ $cs->id }},{{ $sub->subject_id }}">
-                                              {{ $sub->subject_name }}
+                                              {{ $sub->subject_name }}  
                                           </option>
                                       @endforeach
-                                      
                                   </optgroup>
 
                               @endforeach
@@ -33,7 +35,7 @@
                       </div>
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                         <div class="form-group">
                             <label>&nbsp;</label>
                             <button type="submit" class="btn btn-danger btn-block">
@@ -55,42 +57,42 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title"><b>{{ $class->class_name }} - {{ $class->division }}</b><hr/>Total Student: {{ $marks->count() }}</h4>
-                    <div class="table-responsive">
+                    <h4 class="card-title">
+                        @if($marks->isNotEmpty())
+                            <b>{{ $marks->first()->class_name }} - {{ $marks->first()->division }}</b><br><br>
+                            <label class="badge badge-info p-3 text-white rounded-pill text-large">{{ $marks->first()->subject_name }}</label>
+                        @else
+                            <b>No Class Selected</b>
+                        @endif
+                        <hr/>
+                        Total Students: {{ $marks->count() }}
+                    </h4>                    <div class="table-responsive">
                         <table class="table table-dark">
                             <thead>
                                 <tr>
                                     <th>Student Name</th>
-                                    <th>Subject</th>
                                     <th> CIA 1 </th>
                                     <th> CIA 2 </th>
-                                    <th> SEE </th>
-                                    <th>Marks</th>
+                                    <th> SEE </th>  
                                 </tr>
-                            </thead>
+                            </thead>    
                             <tbody>
                                 @forelse($marks as $mark)
                                     <tr>
                                         <td>{{ $mark->student_name }}</td>
-                                        <td>{{ $mark->subject_name }}</td>
                                         <td>
-                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
-                                                {{ $mark->marks }}
+                                            <label class="badge badge-{{ $mark->cia1 >= 35 ? 'success' : 'danger' }} text-dark">
+                                                {{ $mark->cia1 }}
                                             </label>
                                         </td>
                                         <td>
-                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
-                                                {{ $mark->marks }}
+                                            <label class="badge badge-{{ $mark->cia2 >= 35 ? 'success' : 'danger' }} text-dark">
+                                                {{ $mark->cia2 }}
                                             </label>
                                         </td>
                                         <td>
-                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
-                                                {{ $mark->marks }}
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="badge badge-{{ $mark->marks >= 35 ? 'success' : 'danger' }}">
-                                                {{ $mark->marks }}
+                                            <label class="badge badge-{{ $mark->see >= 35 ? 'success' : 'danger' }} text-dark">
+                                                {{ $mark->see }}
                                             </label>
                                         </td>
                                     </tr>
@@ -107,17 +109,6 @@
         </div>
     </div>
 @endif
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
         

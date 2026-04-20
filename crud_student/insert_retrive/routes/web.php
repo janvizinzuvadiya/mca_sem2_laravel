@@ -30,6 +30,30 @@ Route::prefix('corona')->group(function ()
     {
         return view('corona.1');
     });
+    Route::get('/2',function()
+    {
+        return view('corona.2');
+    });
+    Route::get('/3',function()
+    {
+        return view('corona.3');
+    });
+    Route::get('/4',function()
+    {
+        return view('corona.4');
+    });
+    Route::get('/5',function()
+    {
+        return view('corona.5');
+    });
+    Route::get('/6',function()
+    {
+        return view('corona.6');
+    });
+    Route::get('/7',function()
+    {
+        return view('corona.7');
+    });
 
 
 });

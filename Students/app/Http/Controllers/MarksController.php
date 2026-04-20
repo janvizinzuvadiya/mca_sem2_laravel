@@ -40,9 +40,21 @@ class MarksController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $class = DB::table('classes')->get();
+
+        $user = DB::table('users')
+        ->join('classes','classes.id','=','users.class_id')
+        ->where('users.class_id',$request->class_id)
+        ->get();
+
+        $class_sub = DB::table('class_subject')
+        ->join('classes','classes.id','=','class_subject.class_id')
+        ->join('subjects','subjects.id','=','class_subject.subject_id')
+        ->where ('class_subject.class_id', $request->class_id)
+        ->get();
+        return view('Student.marks.add_marks',compact('class','user','class_sub'));
     }
 
     /**
@@ -58,37 +70,44 @@ class MarksController extends Controller
      */
     public function show(Request $request)
     {
-        $class = DB::table('classes')->get();
+        $class = DB::table('classes')->get(); 
+
         $class_sub = DB::table('class_subject')
-        ->join('classes','classes.id','=','class_subject.class_id')
         ->join('subjects','subjects.id','=','class_subject.subject_id')
+        ->join('classes','classes.id','=','class_subject.class_id')
         ->select(
-            'classes.id',
             'classes.class_name',
             'classes.division',
-            'subjects.id as subject_id',
-            'subjects.subject_name', 
-            'class_subject.id as class_subject_id'
+            'subjects.subject_name',
+            'class_subject.id',
+            'class_subject.class_id',
+            'class_subject.subject_id'
         )
-        ->get();    
+        ->get();
 
-        $data = DB::table('marks')
-        ->join('users','users.id','=','marks.user_id')
-        ->select(
-            'users.name as student_name',
-            'marks.cia1',
-            'marks.cia2',
-            'marks.see'
-        );
+        $marks= collect()   ;
 
-        if($request->filled('class_id'))
+        if($request->filled('class_subject_id'))
         {
-            $data->where('marks.class_id',$request->class_id);
-        }
+            $ids = explode(',', $request->class_subject_id);
+            $class_id = $ids[0];
+            $subject_id = $ids[1];
 
-        $result= $data->get();
+            $marks = DB::table('marks')
+                ->join('users', 'marks.user_id', '=', 'users.id')
+                ->join('class_subject','class_subject.id' ,'=','marks.class_subject_id')
+                ->join('subjects','subjects.id','=','class_subject.subject_id')
+                ->join('classes','classes.id','=','class_subject.class_id')
+                ->where('users.class_id', $class_id)
+                ->where('subjects.id', $subject_id)
+                ->select('users.name as student_name', 
+                        'classes.class_name', 'classes.division',
+                        'subjects.subject_name', 
+                        'marks.cia1', 'marks.cia2', 'marks.see')
+                ->get();
+        }    
 
-        return view('Student.marks.mark_details',compact('result','class_sub','class'));
+        return view('Student.marks.mark_details',compact('class','class_sub','marks'));
 
     }
 
