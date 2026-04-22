@@ -17,7 +17,7 @@
             <div class="card-body">
             <h4 class="card-title">Edit Information</h4>
             <p class="card-description"> Record will be edited soon </p>
-            <form class="forms-sample" action= "{{ route('update', $result->id) }}" method="post">
+            <form class="forms-sample" action="{{ route('update', $result->id) }}" method="post">
                 @csrf
                 <div class="form-group row">
                     <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Name</label>

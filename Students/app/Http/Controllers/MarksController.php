@@ -12,14 +12,12 @@ class MarksController extends Controller
      */
     public function index(Request $request)
     {
-        
         $classes = DB::table('classes')->get();
         $exams = DB::table('exams')->get();
         $marks = null; 
 
         if ($request->filled('class_subject_id')) 
         {
-           
             $ids = explode(',', $request->class_subject_id);
             $class_id = $ids[0];
             $subject_id = $ids[1];  
@@ -44,17 +42,36 @@ class MarksController extends Controller
     {
         $class = DB::table('classes')->get();
 
-        $user = DB::table('users')
-        ->join('classes','classes.id','=','users.class_id')
-        ->where('users.class_id',$request->class_id)
-        ->get();
+        $users = collect();
+        $class_sub = collect();
+        $class_id_entered = null;
 
-        $class_sub = DB::table('class_subject')
-        ->join('classes','classes.id','=','class_subject.class_id')
-        ->join('subjects','subjects.id','=','class_subject.subject_id')
-        ->where ('class_subject.class_id', $request->class_id)
-        ->get();
-        return view('Student.marks.add_marks',compact('class','user','class_sub'));
+        if($request->filled('class_id'))
+        {
+            $class_id_entered = DB::table('classes')
+            ->where('classes.id',$request->class_id)
+            ->select('classes.class_name','classes.division','classes.id')
+            ->first();
+
+            $users = DB::table('users')
+            ->where('users.class_id',$request->class_id)
+            ->get();
+
+            $class_sub = DB::table('class_subject')
+            ->join('classes','classes.id','=','class_subject.class_id')
+            ->join('subjects','subjects.id','=','class_subject.subject_id')
+            ->where ('class_subject.class_id', $request->class_id)
+            ->select(
+                'subjects.subject_name',
+                'class_subject.id',
+                'class_subject.class_id',
+                'class_subject.subject_id'
+            )
+            ->get();
+        }
+
+       
+        return view('Student.marks.add_marks',compact('class','users','class_sub','class_id_entered'));
     }
 
     /**
@@ -62,7 +79,42 @@ class MarksController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+
+        $cid = $request->class_id;
+        $sid = $request->sname;
+        $uid = $request->user_id;
+
+        $m1 = $request->cia1;
+        $m2 = $request->cia2;
+        $m3 = $request->see;
+
+        $cbid = DB::table('class_subject')
+        ->where('class_id',$cid)
+        ->where('subject_id',$sid)
+        ->first();
+
+        $flag = DB::table('marks')
+        ->insert([
+            'class_subject_id' => $cbid->id,
+            'user_id' => $uid,
+            'cia1' => $m1,
+            'cia2' => $m2,
+            'see' => $m3,
+        ]);
+
+        if($flag)
+        {
+            $combined_id = $request->class_id . ',' . $request->sname;
+            return redirect()->route('allmarks', ['class_subject_id' => $combined_id]);
+        }
+        else
+        {
+            return "failed!!";
+        }
+
+
+
     }
 
     /**
@@ -87,8 +139,9 @@ class MarksController extends Controller
 
         $marks= collect()   ;
 
-        if($request->filled('class_subject_id'))
+        if($request->filled('class_subject_id') )
         {
+            // return $request->class_subject_id;
             $ids = explode(',', $request->class_subject_id);
             $class_id = $ids[0];
             $subject_id = $ids[1];
