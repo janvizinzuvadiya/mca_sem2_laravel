@@ -1,0 +1,15 @@
+[2026-04-30 07:36:57] local.ERROR: There are no commands defined in the "optimise" namespace.
+
+Did you mean this?
+    optimize {"exception":"[object] (Symfony\\Component\\Console\\Exception\\NamespaceNotFoundException(code: 0): There are no commands defined in the \"optimise\" namespace.
+
+Did you mean this?
+    optimize at /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/vendor/symfony/console/Application.php:669)
+[stacktrace]
+#0 /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/vendor/symfony/console/Application.php(720): Symfony\\Component\\Console\\Application->findNamespace()
+#1 /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/vendor/symfony/console/Application.php(266): Symfony\\Component\\Console\\Application->find()
+#2 /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/vendor/symfony/console/Application.php(175): Symfony\\Component\\Console\\Application->doRun()
+#3 /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/vendor/laravel/framework/src/Illuminate/Foundation/Console/Kernel.php(201): Symfony\\Component\\Console\\Application->run()
+#4 /home/jnv/Documents/MCA/Sem2/php_laravel/code/prep/exam/artisan(35): Illuminate\\Foundation\\Console\\Kernel->handle()
+#5 {main}
+"} 
