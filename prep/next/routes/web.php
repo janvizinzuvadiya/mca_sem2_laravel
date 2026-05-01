@@ -7,7 +7,7 @@ Route::controller(ProductController::class)->group(function(){
 
     Route::get('/', 'index')->name('pdc.home');
 
-    // Route::get('');
+    Route::get('/reg','create')->name('pdc.reg');
 
 
 

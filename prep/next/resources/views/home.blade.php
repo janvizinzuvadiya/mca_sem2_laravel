@@ -20,8 +20,14 @@
     </head>
     <body>
         <div class="container mt-3">
-          <h1 class="h1">Resource</h1>  
-
+          <div class="row" >
+              <div class="col-md-8">
+                <h1 class="h1">Resource</h1>  
+              </div>
+              <div class="col-md-4">
+                <a href="{{ route('pdc.reg') }}" class="btn btn-primary">Add Resource</a>
+              </div>
+          </div>
           <table class="table table-striped">
             <thead>
               <tr>
@@ -51,16 +57,7 @@
               
               </tr>
               @endforeach
-              <tr>
-                <td>Mary</td>
-                <td>Moe</td>
-                <td>mary@example.com</td>
-              </tr>
-              <tr>
-                <td>July</td>
-                <td>Dooley</td>
-                <td>july@example.com</td>
-              </tr>
+
             </tbody>
           </table>
 </div>
