@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,52 +19,34 @@
         </style>
     </head>
     <body>
-        <div class="container mt-5">
-          <h1 class="h1">Make Oders</h1>  
-
-          <form action="{{ route('pdc.store') }}" method="post" class="mt-4">
-            @csrf
-            
-            <div class ="row mb-3">
-                <label for ="name" class="col-md-2">Product Name</label>
-                <div class="col-md-8">
-                    <input type="text" name="name" class="form-control ">
-                </div>
-            </div>
-
-            <div class ="row mb-3">
-                <label for ="description" class="col-md-2">Description</label>
-                <div class="col-md-8">
-                    <input type="text" name="description" class="form-control">
-                </div>
-            </div>
-
-            <div class ="row mb-3">
-                <label for ="price" class="col-md-2">Price</label>
-                <div class="col-md-3">
-                    <input type="number" name="price" class="form-control ">
-                </div>
-            
-                <label for ="quantity" class="col-md-2">Quantity</label>
-                <div class="col-md-3">
-                    <input type="number" name="quantity" class="form-control ">
-                </div>
-            </div>
-            <div class ="row mb-3">
-
-                <label for ="category" class="col-md-2">Category</label>
-                <div class="col-md-8">
-                    <input type="text" name="category" class="form-control ">
-                </div>
-            </div>
-           
-            <div class="row mt-3">
-                <div class="col-md-4">
-                    <input type="submit" value="Submit" class="btn btn-primary">
-                </div>
-            </div>
-
-          </form>
+        <div class="container mt-3">
+  <h1 class="h1">Resource</h1>  
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Firstname</th>
+        <th>Lastname</th>
+        <th>Email</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>John</td>
+        <td>Doe</td>
+        <td>john@example.com</td>
+      </tr>
+      <tr>
+        <td>Mary</td>
+        <td>Moe</td>
+        <td>mary@example.com</td>
+      </tr>
+      <tr>
+        <td>July</td>
+        <td>Dooley</td>
+        <td>july@example.com</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
     </body>
 </html>

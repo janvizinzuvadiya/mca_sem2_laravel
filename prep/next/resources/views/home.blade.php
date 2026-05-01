@@ -19,16 +19,16 @@
         </style>
     </head>
     <body>
-        <div class="container mt-3">
+        <div class="container mt-5">
           <div class="row" >
-              <div class="col-md-8">
+              <div class="col-md-9">
                 <h1 class="h1">Resource</h1>  
               </div>
-              <div class="col-md-4">
-                <a href="{{ route('pdc.reg') }}" class="btn btn-primary">Add Resource</a>
+              <div class="col-md-3">
+                <a href="{{ route('pdc.reg') }}" class="btn btn-primary float-right">Add Resource</a>
               </div>
           </div>
-          <table class="table table-striped">
+          <table class="table table-striped mt-3">
             <thead>
               <tr>
                 <th>id</th>
@@ -50,8 +50,8 @@
                 <td>{{$pd->quantity}}</td>
                 <td>{{$pd->category}}</td>
                 <td>
-                  <a href="{{route('pdc.home')}}" class="btn btn-primary">Edit</a>
-                  <a href="{{route('pdc.home')}}" class="btn btn-danger">Delete</a>
+                  <a href="{{route('pdc.edit',$pd->id)}}" class="btn btn-primary">Edit</a>
+                  <a href="{{route('pdc.delete',$pd->id)}}" class="btn btn-danger">Delete</a>
 
                 </td>
               

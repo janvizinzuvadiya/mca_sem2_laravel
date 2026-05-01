@@ -22,49 +22,49 @@
         <div class="container mt-5">
           <h1 class="h1">Make Oders</h1>  
 
-          <form action="{{ route('pdc.store') }}" method="post" class="mt-4">
+          <form action="{{ route('pdc.update',$pdc->id) }}" method="post" class="mt-4">
             @csrf
             
             <div class ="row mb-3">
                 <label for ="name" class="col-md-2">Product Name</label>
                 <div class="col-md-8">
-                    <input type="text" name="name" class="form-control ">
+                    <input type="text" name="name" class="form-control " value="{{$pdc->name}}">
                 </div>
             </div>
 
             <div class ="row mb-3">
                 <label for ="description" class="col-md-2">Description</label>
                 <div class="col-md-8">
-                    <input type="text" name="description" class="form-control">
+                    <input type="text" name="description" class="form-control" value="{{$pdc->description}}">
                 </div>
             </div>
 
             <div class ="row mb-3">
                 <label for ="price" class="col-md-2">Price</label>
                 <div class="col-md-3">
-                    <input type="number" name="price" class="form-control ">
+                    <input type="number" name="price" class="form-control " value="{{$pdc->price}}">
                 </div>
             
                 <label for ="quantity" class="col-md-2">Quantity</label>
                 <div class="col-md-3">
-                    <input type="number" name="quantity" class="form-control ">
+                    <input type="number" name="quantity" class="form-control " value="{{$pdc->quantity}}">
                 </div>
             </div>
             <div class ="row mb-3">
 
                 <label for ="category" class="col-md-2">Category</label>
                 <div class="col-md-8">
-                    <input type="text" name="category" class="form-control ">
+                    <input type="text" name="category" class="form-control " value="{{$pdc->category}}">
                 </div>
             </div>
            
             <div class="row mt-3">
                 <div class="col-md-4">
-                    <input type="submit" value="Submit" class="btn btn-primary">
+                    <input type="submit" value="Save" class="btn btn-primary">
                 </div>
             </div>
 
           </form>
-</div>
+        </div>
     </body>
 </html>
