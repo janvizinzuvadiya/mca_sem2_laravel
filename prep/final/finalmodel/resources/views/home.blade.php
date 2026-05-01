@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -19,34 +19,45 @@
         </style>
     </head>
     <body>
-        <div class="container mt-3">
-  <h1 class="h1">Resource</h1>  
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-9">
+            <h1 class="display-5">Welcome to Student Management System</h1>
+          </div>
+          <div class="col-md-2 text-end">
+            <a href="{{ route('stud.reg') }}" class="btn btn-primary">Add Student</a>
+          </div>
+        </div> 
+        <table class="table table-striped mt-5">
+          <thead>
+            <tr>
+              <th>Enrollment_no</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Course</th>
+              <th>Joining Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($stud as $s)
+            <tr>
+              <td>{{ $s->enrollment_no }}</td>
+              <td>{{ $s->full_name }}</td>
+              <td>{{ $s->email }}</td>
+              <td>{{ $s->course }}</td>
+              <td>{{ $s->joining_date }}</td>
+              <td>{{ $s->status }}</td>
+              <td>
+                <a href="{{ route('stud.edit', $s->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                <a href="{{ route('stud.delete', $s->id) }}" class="btn btn-sm btn-danger">Delete</a>
+              </td>
+            </tr>
+            @endforeach
+            
+          </tbody>
+        </table>
+      </div>
     </body>
 </html>
