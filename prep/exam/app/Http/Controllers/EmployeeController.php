@@ -52,21 +52,12 @@ class EmployeeController extends Controller
         else{
             return 'Something went wrong';
         }
-
-
-
-
         
     }
 
     
     public function show(string $id)
     {
-        
-
-      
-
-
 
     }
 

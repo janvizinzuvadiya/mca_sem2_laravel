@@ -46,7 +46,7 @@ class ProductController extends Controller
 
         if($result)
         {
-            return redirect()->route('pdc.home')->with('success','Product Added Successfully');
+            return redirect()->route('pdc.home');
         }
         else
         {

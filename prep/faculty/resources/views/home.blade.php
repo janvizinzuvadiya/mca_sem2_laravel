@@ -42,7 +42,7 @@
                         <td> {{ $f->designation }}</td>
                         <td> {{ $f->salary }}</td>
                         <td>
-                            <a href="{{ route('fcl.edit',$f->id)}}" class="btn btn-primary">Edit</a>
+                            <a href="{{ route('fcl.edit',$f->id)}}"cd  class="btn btn-primary">Edit</a>
                             <a href="{{ route('fcl.delete',$f->id)}}" class="btn btn-danger">Delete</a>
                         </td>
                 
